@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 use Mockery as m;
 use SwooleTW\Http\Tests\TestCase;
 use SwooleTW\Http\Websocket\Middleware\DecryptCookies;
-use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\HttpFoundation\InputBag;
 
-class DecrpytCookiesTest extends TestCase
+class DecryptCookiesTest extends TestCase
 {
     public function testDisableFor()
     {
@@ -22,22 +22,22 @@ class DecrpytCookiesTest extends TestCase
 
     public function testDecrypt()
     {
-        $request = new Request;
-        $request->cookies = new ParameterBag([
-            'foo' => 'bar',
+        $request          = new Request;
+        $request->cookies = new InputBag([
+            'foo'     => 'bar',
             'seafood' => 'sasaya',
-            'aaa' => [
+            'aaa'     => [
                 'bbb' => 'ccc',
             ],
         ]);
 
         $encrypter = m::mock(EncrypterContract::class);
         $encrypter->shouldReceive('decrypt')
-                  ->once()
-                  ->with('sasaya', false);
+            ->once()
+            ->with('sasaya', false);
         $encrypter->shouldReceive('decrypt')
-                  ->once()
-                  ->with('ccc', false);
+            ->once()
+            ->with('ccc', false);
 
         $middleware = $this->getMiddleware($encrypter);
         $middleware->disableFor('foo');

@@ -29,6 +29,7 @@ class RequestTest extends TestCase
         $realPath = false;
         $this->mockMethod('realpath', function () use (&$realPath) {
             $realPath = true;
+
             return '/foo.css';
         });
 
@@ -50,14 +51,14 @@ class RequestTest extends TestCase
 
         $response = m::mock('response');
         $response->shouldReceive('status')
-                 ->with(200)
-                 ->once();
+            ->with(200)
+            ->once();
         $response->shouldReceive('header')
-                 ->with('Content-Type', 'text/css')
-                 ->once();
+            ->with('Content-Type', 'text/css')
+            ->once();
         $response->shouldReceive('sendfile')
-                 ->with('/foo.css')
-                 ->once();
+            ->with('/foo.css')
+            ->once();
 
         Request::handleStatic(new SwooleRequestStub, $response, '/');
 
@@ -68,7 +69,7 @@ class RequestTest extends TestCase
 
     public function testHandleStaticWithBlackList()
     {
-        $request = new SwooleRequestStub;
+        $request                        = new SwooleRequestStub;
         $request->server['request_uri'] = 'foo.php';
 
         $result = Request::handleStatic($request, null, '/');
@@ -105,10 +106,10 @@ class SwooleRequestStub extends SwooleRequest
 
     public $server = [
         'HTTP_CONTENT_LENGTH' => 0,
-        'CONTENT_LENGTH' => 0,
-        'HTTP_CONTENT_TYPE' => null,
-        'CONTENT_TYPE' => null,
-        'request_uri' => 'foo.bar',
+        'CONTENT_LENGTH'      => 0,
+        'HTTP_CONTENT_TYPE'   => null,
+        'CONTENT_TYPE'        => null,
+        'request_uri'         => 'foo.bar',
     ];
 
     public $cookie = [];
@@ -117,7 +118,7 @@ class SwooleRequestStub extends SwooleRequest
 
     public $fd = 1;
 
-    function rawContent()
+    public function rawContent(): string|false
     {
         return 'foo=bar';
     }
