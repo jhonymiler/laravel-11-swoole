@@ -19,16 +19,16 @@
     "require": {
         "php": ">=8.2",
         "ext-swoole": ">=4",
-        "laravel/framework": "^11.0",
-        "illuminate/console": "*",
-        "illuminate/contracts": "*",
-        "illuminate/http": "*",
-        "illuminate/support": "*",
+        "laravel/framework": "^10.0 || ^11.0",
+        "illuminate/console": "^10.0 || ^11.0",
+        "illuminate/contracts": "^10.0 || ^11.0",
+        "illuminate/http": "^10.0 || ^11.0",
+        "illuminate/support": "^10.0 || ^11.0",
         "predis/predis": "^2.2"
     },
     "require-dev": {
         "swoole/ide-helper": "@dev",
-        "laravel/lumen-framework": "^11.0",
+        "laravel/lumen-framework": "^10.0 || ^11.0",
         "phpunit/phpunit": "^11.2",
         "phpunit/php-code-coverage": "^11.0",
         "php-coveralls/php-coveralls": "^0.1.0",
