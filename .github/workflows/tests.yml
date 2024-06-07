@@ -32,7 +32,6 @@ jobs:
             framework: "laravel/framework:^11.0"
             swoole: "5.1.3"
 
-
     name: PHP ${{ matrix.php }} (${{ matrix.framework }}) swoole-(${{ matrix.swoole }})
 
     steps:
@@ -44,7 +43,7 @@ jobs:
           coverage: none
 
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: |
