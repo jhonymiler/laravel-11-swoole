@@ -8,3 +8,7 @@ composer.lock
 # Folders
 vendor
 .idea
+docker-compose.yml
+Dockerfile
+nginx.conf
+swoole-server.php
