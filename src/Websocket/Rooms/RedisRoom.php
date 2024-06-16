@@ -12,7 +12,7 @@ use Predis\Pipeline\Pipeline;
 class RedisRoom implements RoomContract
 {
     /**
-     * @var \Predis\Client
+     * @var RedisClient
      */
     protected $redis;
 
@@ -28,19 +28,12 @@ class RedisRoom implements RoomContract
 
     /**
      * RedisRoom constructor.
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
         $this->config = $config;
     }
 
-    /**
-     * @param \Predis\Client|null $redis
-     *
-     * @return \SwooleTW\Http\Websocket\Rooms\RoomContract
-     */
     public function prepare(RedisClient $redis = null): RoomContract
     {
         $this->setRedis($redis);
@@ -52,13 +45,11 @@ class RedisRoom implements RoomContract
 
     /**
      * Set redis client.
-     *
-     * @param \Predis\Client|null $redis
      */
     public function setRedis(?RedisClient $redis = null)
     {
         if (! $redis) {
-            $server = Arr::get($this->config, 'server', []);
+            $server  = Arr::get($this->config, 'server', []);
             $options = Arr::get($this->config, 'options', []);
 
             // forbid setting prefix from options
@@ -128,9 +119,6 @@ class RedisRoom implements RoomContract
     /**
      * Add value to redis.
      *
-     * @param $key
-     * @param array $values
-     * @param string $table
      *
      * @return $this
      */
@@ -151,9 +139,6 @@ class RedisRoom implements RoomContract
     /**
      * Remove value from redis.
      *
-     * @param $key
-     * @param array $values
-     * @param string $table
      *
      * @return $this
      */
@@ -175,7 +160,6 @@ class RedisRoom implements RoomContract
      * Get all sockets by a room key.
      *
      * @param string room
-     *
      * @return array
      */
     public function getClients(string $room)
@@ -187,7 +171,6 @@ class RedisRoom implements RoomContract
      * Get all rooms by a fd.
      *
      * @param int fd
-     *
      * @return array
      */
     public function getRooms(int $fd)
@@ -197,8 +180,6 @@ class RedisRoom implements RoomContract
 
     /**
      * Check table for rooms and descriptors.
-     *
-     * @param string $table
      */
     protected function checkTable(string $table)
     {
@@ -210,8 +191,6 @@ class RedisRoom implements RoomContract
     /**
      * Get value.
      *
-     * @param string $key
-     * @param string $table
      *
      * @return array
      */
@@ -228,8 +207,6 @@ class RedisRoom implements RoomContract
     /**
      * Get key.
      *
-     * @param string $key
-     * @param string $table
      *
      * @return string
      */
@@ -246,5 +223,10 @@ class RedisRoom implements RoomContract
         if (count($keys = $this->redis->keys("{$this->prefix}*"))) {
             $this->redis->del($keys);
         }
+    }
+
+    public function getAllRooms()
+    {
+        return $this->redis->keys("{$this->prefix}*");
     }
 }

@@ -20,8 +20,6 @@ interface RoomContract
 
     /**
      * Do some init stuffs before workers started.
-     *
-     * @return \SwooleTW\Http\Websocket\Rooms\RoomContract
      */
     public function prepare(): RoomContract;
 
@@ -45,7 +43,6 @@ interface RoomContract
      * Get all sockets by a room key.
      *
      * @param string room
-     *
      * @return array
      */
     public function getClients(string $room);
@@ -54,8 +51,9 @@ interface RoomContract
      * Get all rooms by a fd.
      *
      * @param int fd
-     *
      * @return array
      */
     public function getRooms(int $fd);
+
+    public function getAllRooms();
 }
